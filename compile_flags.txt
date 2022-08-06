@@ -1,1 +1,5 @@
 -Iinclude
+-Ilib/glad/include
+-Ilib/glfw/include
+-Ilib/glm
+-Ilib/muparser/include
