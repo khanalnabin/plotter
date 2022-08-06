@@ -1,4 +1,4 @@
-#include "glad.h"
+#include "glad/glad.h"
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <cmath>
@@ -53,7 +53,7 @@ int main() {
 	double radians = 1;
 	mu::Parser p;
 	p.DefineVar("x", &radians);
-	p.SetExpr("sin(x)+cos(2*x)");
+	p.SetExpr("cos(x)+cos(2*x)");
 	while (!glfwWindowShouldClose(window)) {
 		handleInput(window);
 

@@ -1,1 +1,1 @@
-cd build && cmake .. && make && cd plotter && ./plotter
+cd build && cmake .. && make && ./plotter
