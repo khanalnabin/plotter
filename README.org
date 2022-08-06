@@ -1,7 +1,1 @@
-* Angel
-  Angel is a static graphics library to emulate graphics.h putpixel function.
-** Build Instruction
-#+begin_src bash
-g++ demo.cpp glad.cpp Angel.cpp -lglfw -lGL -o main
-./main
-#+end_src
+* Plotter is a graph plotting application written in C++.
