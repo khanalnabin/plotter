@@ -48,21 +48,32 @@ int main() {
 	// setup Angel
 	Angel::init(WIDTH, HEIGHT);
 
-	const std::string expression_string = "sin(x)";
-
 	double radians = 1;
+	double phase = 0;
 	mu::Parser p;
 	p.DefineVar("x", &radians);
-	p.SetExpr("cos(x)+cos(2*x)");
+	std::string exp = "sin(x)";
+	for (int i = 3; i < 20; i += 2) {
+		exp += "+sin(" + std::to_string(i) + "*x)/" + std::to_string(i);
+	}
+	try {
+		p.SetExpr(exp);
+		p.Eval();
+	} catch (mu::Parser::exception_type &e) {
+		std::cout << e.GetMsg() << std::endl;
+	}
+
+	float range = 5 * M_PI;
+
 	while (!glfwWindowShouldClose(window)) {
 		handleInput(window);
-
+		phase += 0.1;
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 		Angel::drawAxes();
 		for (int i = (-WIDTH / 2); i <= WIDTH / 2; i++) {
-			radians = -2 * M_PI +
-			          (i + (float)WIDTH / 2) / ((float)WIDTH) * (M_PI * 2 * 2);
+			radians =
+			    -range + (i + (float)WIDTH / 2) / ((float)WIDTH) * (range * 2);
 			Angel::putPixel(i, 100 * p.Eval(), Color(1.0f, 0.0f, 0.0f));
 		}
 		glfwSwapBuffers(window);
