@@ -12,6 +12,8 @@ int HEIGHT = 800;
 void handleInput(GLFWwindow *window);
 void framebufferSizeCallback(GLFWwindow *window, int width, int height);
 
+void dropCallback(GLFWwindow *window, int count, const char **paths);
+
 int main() {
 
 	// initialize GLFW
@@ -44,6 +46,7 @@ int main() {
 	std::cout << "Loaded GLAD." << std::endl;
 
 	glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
+	glfwSetDropCallback(window, dropCallback);
 
 	// setup Angel
 	Angel::init(WIDTH, HEIGHT);
@@ -53,7 +56,7 @@ int main() {
 	mu::Parser p;
 	p.DefineVar("x", &radians);
 	std::string exp = "sin(x)";
-	for (int i = 3; i < 20; i += 2) {
+	for (int i = 3; i < 1000; i += 2) {
 		exp += "+sin(" + std::to_string(i) + "*x)/" + std::to_string(i);
 	}
 	try {
@@ -74,7 +77,7 @@ int main() {
 		for (int i = (-WIDTH / 2); i <= WIDTH / 2; i++) {
 			radians =
 			    -range + (i + (float)WIDTH / 2) / ((float)WIDTH) * (range * 2);
-			Angel::putPixel(i, 100 * p.Eval(), Color(1.0f, 0.0f, 0.0f));
+			Angel::putPixel(i, 100 * p.Eval(), Color(0.0f, 1.0f, 1.0f));
 		}
 		glfwSwapBuffers(window);
 		glfwPollEvents();
@@ -91,4 +94,10 @@ void framebufferSizeCallback(GLFWwindow *window, int width, int height) {
 	glViewport(0, 0, width, height);
 	Angel::setWidth(width);
 	Angel::setHeight(height);
+}
+
+void dropCallback(GLFWwindow *window, int count, const char **paths) {
+	for (int i = 0; i < count; i++) {
+		std::cout << paths[i] << std::endl;
+	}
 }

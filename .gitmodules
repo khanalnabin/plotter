@@ -11,3 +11,6 @@
 [submodule "lib/muparser"]
 	path = lib/muparser
 	url = git@github.com:beltoforion/muparser.git
+[submodule "lib/angel"]
+	path = lib/angel
+	url = git@github.com:khanalnabin/angel.git

@@ -3,3 +3,4 @@
 -Ilib/glfw/include
 -Ilib/glm
 -Ilib/muparser/include
+-Ilib/angel/include
