@@ -7,8 +7,10 @@ option(GLFW_BUILD_TESTS OFF)
 
 add_subdirectory(lib/glfw)
 
+option(ENABLE_SAMPLES OFF)
 add_subdirectory(lib/muparser)
 
+option(ANGEL_BUILD_DEMO OFF)
 add_subdirectory(lib/angel)
 
 if(MSVC)
