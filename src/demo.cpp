@@ -13,6 +13,7 @@ void handleInput(GLFWwindow *window);
 void framebufferSizeCallback(GLFWwindow *window, int width, int height);
 
 void dropCallback(GLFWwindow *window, int count, const char **paths);
+float map(float x, float a, float b, float u, float v);
 
 int main() {
 
@@ -66,18 +67,23 @@ int main() {
 		std::cout << e.GetMsg() << std::endl;
 	}
 
+	float factor = 100;
 	float range = 5 * M_PI;
+	radians = -range / 2;
 
+	float prev = factor * p.Eval();
 	while (!glfwWindowShouldClose(window)) {
 		handleInput(window);
 		phase += 0.1;
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 		Angel::drawAxes();
-		for (int i = (-WIDTH / 2); i <= WIDTH / 2; i++) {
+		for (int i = (-WIDTH / 2) + 1; i <= WIDTH / 2; i++) {
 			radians =
 			    -range + (i + (float)WIDTH / 2) / ((float)WIDTH) * (range * 2);
-			Angel::putPixel(i, 100 * p.Eval(), Color(0.0f, 1.0f, 1.0f));
+			float value = factor * p.Eval();
+			Angel::line(i, value, i - 1, prev, Color(0.0f, 1.0f, 1.0f));
+			prev = value;
 		}
 		glfwSwapBuffers(window);
 		glfwPollEvents();
@@ -100,4 +106,8 @@ void dropCallback(GLFWwindow *window, int count, const char **paths) {
 	for (int i = 0; i < count; i++) {
 		std::cout << paths[i] << std::endl;
 	}
+}
+
+float map(float x, float a, float b, float u, float v) {
+	return u + (x - a) / (b - a) * (v - u);
 }
